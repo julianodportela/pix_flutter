@@ -19,7 +19,7 @@ Este plug-in permite:
 
 ```dart
 dependencies:
-    pix_flutter: ^1.0.0
+    pix_flutter: ^1.0.1
 ```
 
 2. Importar o pacote

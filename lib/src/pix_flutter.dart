@@ -52,14 +52,22 @@ class PixFlutter {
           idMerchantAccountInformationKey,
           this.payload!.pixKey
       );
-      final description = getValue(
-          idMerchantAccountInformationDescription,
-          this.payload!.description
-      );
+
+      // Há um erro no API que impede o uso de descrição
+      // final description = getValue(
+      //     idMerchantAccountInformationDescription,
+      //     this.payload!.description
+      // );
+
+      // Há um erro no API que impede o uso de descrição
+      // return getValue(
+      //     idMerchantAccountInformation,
+      //     "$gui$key$description"
+      // );
 
       return getValue(
           idMerchantAccountInformation,
-          "$gui$key$description"
+          "$gui$key"
       );
     }
 

@@ -45,6 +45,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       payload: Payload(
           pixKey: 'SUA_CHAVE_PIX',
+          // Há um erro no API que impede o uso de descrição, ela não será inserida.
           description: 'DESCRIÇÃO_DA_COMPRA',
           merchantName: 'MERCHANT_NAME',
           merchantCity: 'CITY_NAME',
