@@ -15,14 +15,14 @@ Este plug-in permite:
 - Configurar, consultar e cancelar webhooks
 
 ## Como usar o pix_flutter
-1. Adicione dependência a `pubspec.yaml`
+1. Adicione a dependência ao `pubspec.yaml`
 
 ```dart
 dependencies:
-    pix_flutter: ^1.0.1
+    pix_flutter: ^1.0.2
 ```
 
-2. Importar o pacote
+2. Importe o pacote
 ```dart
 import 'package:pix_flutter/pix_flutter.dart';
 ```
@@ -33,6 +33,8 @@ import 'package:pix_flutter/pix_flutter.dart';
 PixFlutter pixFlutter = PixFlutter(
       payload: Payload(
           pixKey: 'SUA_CHAVE_PIX',
+          // A descrição está desativada por um erro no próprio API Pix, que não deixa processar pagamentos se ela estiver presente.
+          // Assim que o bug for consertado, a funcionalidade será adicionada de volta. 
           description: 'DESCRIÇÃO_DA_COMPRA',
           merchantName: 'MERCHANT_NAME',
           merchantCity: 'CITY_NAME',
@@ -42,15 +44,12 @@ PixFlutter pixFlutter = PixFlutter(
 );
 
 pixFlutter.getStaticCode();
-
 ```
 
 ### Criar, revisar e consultar cobranças imediatas
 
 ``` dart
-
 // Criar
-
 var request = {
     "calendario": {
         "expiracao": "36000"
@@ -68,8 +67,8 @@ var request = {
 
 pixFlutter.createCobTxid(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
 
-// Revisar
 
+// Revisar
 var request = {
     "loc": {
         "id": "7768"
@@ -86,12 +85,12 @@ var request = {
 
 pixFlutter.reviewCob(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
 
-// Consultar
 
+// Consultar
 pixFlutter.checkCob(txid: 'dg7dng876d8g79d8gsmdg8');
 
-// Consultar Lista
 
+// Consultar Lista
 var request = {
     "parametros": {
       "inicio": "2020-04-01T00:00:00Z",
@@ -122,15 +121,12 @@ var request = {
 };
 
 pixFlutter.checkCobList(request: request);
-
 ```
 
 ### Criar, revisar e consultar cobranças com vencimento
 
 ``` dart
-
 // Criar
-
 var request = {
     "calendario": {
       "dataDeVencimento": "2020-12-31",
@@ -173,8 +169,8 @@ var request = {
 
 pixFlutter.createCobV(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
 
-// Revisar
 
+// Revisar
 var request = {
     "loc": {
       "id": "7768"
@@ -191,12 +187,12 @@ var request = {
 
 pixFlutter.reviewCobV(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
 
-// Consultar
 
+// Consultar
 pixFlutter.checkCobV(txid: 'dg7dng876d8g79d8gsmdg8');
 
-// Consultar Lista
 
+// Consultar Lista
 var request = {
     "parametros": {
       "inicio": "2020-04-01T00:00:00Z",
@@ -220,14 +216,12 @@ var request = {
 };
 
 pixFlutter.checkCobVList(request: request);
-
 ```
 
 ### Criar e consultar cobranças com vencimento em lote
 
 ``` dart
 // Criar
-
 var request = {
     "descricao": "Cobranças dos alunos do turno vespertino",
     "cobsv": [
@@ -282,12 +276,12 @@ var request = {
 
 pixFlutter.createLoteCobV(request: request, id: '');
 
-// Consultar
 
+// Consultar
 pixFlutter.checkLoteCobV(id: '');
 
-// Consultar Lista
 
+// Consultar Lista
 var request  = {
     "parametros": {
       "inicio": "2020-01-01T00:00:00Z",
@@ -318,11 +312,30 @@ var request  = {
 };
 
 pixFlutter.checkLoteCobVList(request: request, txid: '');
-
 ```
 
 - *Observações*
+    * Lembre-se de não usar caracteres especiais nas suas informações usadas no API e de não deixar passar o TXID de 25 caracteres, se você vier a utilizá-lo.
     * Para informações sobre as outras funções do pacote, siga fielmente o modelo apresentado na documentação do API Pix. [`documentação`](https://openpix.com.br/api/API-Pix-2-1-0.html)
     * Este pacote não fará a geração de QR Code, para isto, é recomendado usar o pacote [`qr_flutter`](https://pub.dev/packages/qr_flutter). Para um exemplo com a utilização deste pacote, consulte o aplicativo de exemplo.
     
-Consulte o aplicativo de exemplo deste plugin para obter um exemplo completo. Consulte [LICENÇA](./LICENSE) para obter detalhes.
+Consulte o aplicativo de exemplo deste plugin para obter um exemplo completo. 
+
+## Licença
+
+Distribuído sob a licença MIT. Consulte [LICENÇA](./LICENSE) para obter detalhes.
+
+## Contribuição
+
+Contribuições são o que fazem a comunidade open source um lugar incrível para aprender, inspirar e criar. Qualquer contribuição que você fizer será **muito apreciada**.
+
+1. Faça um Fork do projeto
+2. Crie uma Branch para sua Feature (`git checkout -b feature/FeatureIncrivel`)
+3. Adicione suas mudanças (`git add .`)
+4. Comite suas mudanças (`git commit -m 'Adicionando uma Feature incrível!`)
+5. Faça o Push da Branch (`git push origin feature/FeatureIncrivel`)
+6. Abra um Pull Request
+
+## Contato
+
+[Github](https://github.com/julianodportea) - **julianodportela@gmail.com.**

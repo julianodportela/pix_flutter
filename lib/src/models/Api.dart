@@ -1,3 +1,4 @@
+/// Modelo para criar QR Code dinâmico. Segue informações disponíveis na documentação do API Pix
 class Api {
   final String? baseUrl;
   final String? authUrl;

@@ -1,3 +1,4 @@
+/// Classe que facilita o uso das permissões necessárias para o uso da API.
 class PixPermissions {
   static String get cobWrite => 'cob.write';
   static String get cobRead => 'cob.read';

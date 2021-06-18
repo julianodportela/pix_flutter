@@ -1,3 +1,4 @@
+/// Modelo para criar QR Code estático. Segue informações disponíveis na documentação do API Pix
 class Payload {
   String? pixKey;
   String? description;
