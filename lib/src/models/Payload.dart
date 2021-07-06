@@ -1,4 +1,4 @@
-/// Modelo para criar QR Code estático. Segue informações disponíveis na documentação do API Pix
+/// Modelo para criar QR Code estático ou dinâmico. Segue informações disponíveis na documentação do API Pix
 class Payload {
   String? pixKey;
   String? description;
@@ -6,6 +6,8 @@ class Payload {
   String? merchantCity;
   String? txid;
   String? amount;
+  String? url;
+  bool? isUniquePayment;
 
   Payload({
     this.pixKey,
@@ -14,5 +16,7 @@ class Payload {
     this.merchantCity,
     this.txid,
     this.amount,
+    this.url,
+    this.isUniquePayment
   });
 }

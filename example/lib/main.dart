@@ -43,6 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
           permissions: [], // Lista das permissoes, use PixPermissions,
           isBancoDoBrasil: false // Use true se estiver usando API do BB,
           ),
+
+      // Essas informações a seguir somente são necessárias se você deseja utilizar o QR Code Estático
       payload: Payload(
           pixKey: 'SUA_CHAVE_PIX',
 
@@ -103,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               TextButton(
                   onPressed: () async {
-                    query = pixFlutter.getStaticCode();
+                    query = pixFlutter.getQRCode();
                     setState(() {});
                   },
                   child: Container(
@@ -152,7 +154,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     query = await pixFlutter.createCobTxid(
                         request: request, txid: '');
 
-                    query = query['location'];
+                    var payloadDinamico = PixFlutter(payload: Payload(
+                      merchantName: 'SEU_MERCHANT_NAME',
+                      merchantCity: 'SEU_MERCHANT_CITY',
+                      amount: query['valor']['original'],
+                      txid: query['txid'],
+                      url: query['location'],
+                      isUniquePayment: true,
+                    ));
+
+                    query = payloadDinamico.getQRCode();
 
                     setState(() {});
                   },

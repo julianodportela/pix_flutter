@@ -29,7 +29,8 @@ class PixFlutter {
 
   PixFlutter({this.api, this.payload});
 
-  getStaticCode() {
+  /// Método que retorna QR Code estático ou dinâmico
+  getQRCode() {
     /// Calcula o valor da string em questão, é útil para fazer os métodos seguintes.
     getValue(id, value) {
       final size = value.length.toString().padLeft(2, "0");
@@ -41,11 +42,11 @@ class PixFlutter {
       return double.parse(payload!.amount!).toStringAsFixed(2);
     }
 
-    /// Formata informações como gui, key e descrição
+    /// Formata informações como gui, key, url e descrição
     getMerchantAccountInfo() {
       final gui = getValue(idMerchantAccountInformationGUI, "br.gov.bcb.pix");
-      final key =
-          getValue(idMerchantAccountInformationKey, this.payload!.pixKey);
+      final key = this.payload!.pixKey != null && this.payload!.pixKey!.length > 0 ? getValue(idMerchantAccountInformationKey, this.payload!.pixKey) : '';
+      final url = this.payload!.url != null && this.payload!.url!.length > 0 ? getValue(idMerchantAccountInformationURL, this.payload!.url!.replaceAll('https://', '')) : '';
 
       /// Há um erro no API que impede o uso de descrição, justificando assim os comments abaixo. Assim que estes bugs forem consertados, o código voltará ao funcionamento completo.
       // final description = getValue(
@@ -58,7 +59,7 @@ class PixFlutter {
       //     "$gui$key$description"
       // );
 
-      return getValue(idMerchantAccountInformation, "$gui$key");
+      return getValue(idMerchantAccountInformation, "$gui$key$url");
     }
 
     /// Formata o txid
@@ -66,6 +67,13 @@ class PixFlutter {
       final txid =
           getValue(idAdditionalDataFieldTemplateTXID, this.payload!.txid);
       return getValue(idAdditionalDataFieldTemplate, txid);
+    }
+
+    /// Formata o isUniquePayment
+    getUniquePayment() {
+      final uniquePayment = this.payload!.isUniquePayment != null && this.payload!.isUniquePayment == true ? getValue(idPointOfInitiationMethod,'12') : '';
+
+      return uniquePayment;
     }
 
     /// Executa o método de encripção requerido pelo BACEN
@@ -103,6 +111,7 @@ class PixFlutter {
     /// Método final para juntar e gerar o QR Code Estático final
     String getPayload() {
       final payload = getValue(idPaylodFormatIndicator, "01") +
+          getUniquePayment() +
           getMerchantAccountInfo() +
           getValue(idMerchantCategoryCode, "0000") +
           getValue(idTransactionCurrency, "986") +
