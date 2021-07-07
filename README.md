@@ -19,7 +19,7 @@ Este plug-in permite:
 
 ```dart
 dependencies:
-    pix_flutter: ^1.0.3
+    pix_flutter: ^1.0.4
 ```
 
 2. Importe o pacote
@@ -38,12 +38,12 @@ PixFlutter pixFlutter = PixFlutter(
           description: 'DESCRIÇÃO_DA_COMPRA',
           merchantName: 'MERCHANT_NAME',
           merchantCity: 'CITY_NAME',
-          txid: 'TXID',
+          txid: 'TXID', // Até 25 caracteres para o QR Code estático
           amount: 'AMOUNT'
       )
 );
 
-pixFlutter.getStaticCode();
+pixFlutter.getQRCode();
 ```
 
 ### Criar, revisar e consultar cobranças imediatas
@@ -51,21 +51,27 @@ pixFlutter.getStaticCode();
 ``` dart
 // Criar
 var request = {
-    "calendario": {
-        "expiracao": "36000"
-    },
-    "devedor": {
-        "cpf": "12345678909",
-        "nome": "Francisco da Silva"
-    },
-    "valor": {
-        "original": "130.44"
-    },
-    "chave": "7f6844d0-de89-47e5-9ef7-e0a35a681615",
-    "solicitacaoPagador": "Cobrança dos serviços prestados."
+  "calendario": {"expiracao": "36000"},
+  "devedor": {
+    "cpf": "12345678909",
+    "nome": "Francisco da Silva"
+  },
+  "valor": {"original": "130.44"},
+  "chave": "7f6844d0-de89-47e5-9ef7-e0a35a681615",
+  "solicitacaoPagador": "Cobrança dos serviços prestados."
 };
 
-pixFlutter.createCobTxid(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
+query = await pixFlutter.createCobTxid(request: request, txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
+
+var payloadDinamico = PixFlutter(payload: Payload(
+  merchantName: 'SEU_MERCHANT_NAME',
+  merchantCity: 'SEU_MERCHANT_CITY',
+  txid: query['txid'],
+  url: query['location'],
+  isUniquePayment: true,
+));
+
+query = payloadDinamico.getQRCode();
 
 
 // Revisar
@@ -83,11 +89,11 @@ var request = {
     "solicitacaoPagador": "Cobrança dos serviços prestados."
 };
 
-pixFlutter.reviewCob(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
+pixFlutter.reviewCob(request: request, txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar
-pixFlutter.checkCob(txid: 'dg7dng876d8g79d8gsmdg8');
+pixFlutter.checkCob(txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar Lista
@@ -167,7 +173,7 @@ var request = {
     "solicitacaoPagador": "Cobrança dos serviços prestados."
 };
 
-pixFlutter.createCobV(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
+pixFlutter.createCobV(request: request, txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Revisar
@@ -185,11 +191,11 @@ var request = {
     "solicitacaoPagador": "Cobrança dos serviços prestados."
 };
 
-pixFlutter.reviewCobV(request: request, txid: 'dg7dng876d8g79d8gsmdg8');
+pixFlutter.reviewCobV(request: request, txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar
-pixFlutter.checkCobV(txid: 'dg7dng876d8g79d8gsmdg8');
+pixFlutter.checkCobV(txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar Lista
@@ -274,11 +280,11 @@ var request = {
     ]
 };
 
-pixFlutter.createLoteCobV(request: request, id: '');
+pixFlutter.createLoteCobV(request: request, id: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar
-pixFlutter.checkLoteCobV(id: '');
+pixFlutter.checkLoteCobV(id: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar Lista
@@ -311,7 +317,7 @@ var request  = {
     ]
 };
 
-pixFlutter.checkLoteCobVList(request: request, txid: '');
+pixFlutter.checkLoteCobVList(request: request, txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 ```
 
 - *Observações*

@@ -1,3 +1,7 @@
+## [1.0.4] - 7 de julho de 2021
+
+* Conserto de bug no método de geração do QR Code do QR Code dinâmico, pequenos ajustes no exemplo e formatação.
+
 ## [1.0.3] - 6 de julho de 2021
 
 * Ajuste no método de geração do QR Code para suportar QR Code dinâmico e pequenos ajustes.

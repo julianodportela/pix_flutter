@@ -9,14 +9,13 @@ class Payload {
   String? url;
   bool? isUniquePayment;
 
-  Payload({
-    this.pixKey,
-    this.description,
-    this.merchantName,
-    this.merchantCity,
-    this.txid,
-    this.amount,
-    this.url,
-    this.isUniquePayment
-  });
+  Payload(
+      {this.pixKey,
+      this.description,
+      this.merchantName,
+      this.merchantCity,
+      this.txid,
+      this.amount,
+      this.url,
+      this.isUniquePayment});
 }

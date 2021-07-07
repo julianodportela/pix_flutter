@@ -39,14 +39,22 @@ class PixFlutter {
 
     /// Formata o valor da compra
     getAmount() {
-      return double.parse(payload!.amount!).toStringAsFixed(2);
+      return this.payload!.amount != null && this.payload!.amount!.length > 0
+          ? double.parse(payload!.amount!).toStringAsFixed(2)
+          : '';
     }
 
     /// Formata informações como gui, key, url e descrição
     getMerchantAccountInfo() {
       final gui = getValue(idMerchantAccountInformationGUI, "br.gov.bcb.pix");
-      final key = this.payload!.pixKey != null && this.payload!.pixKey!.length > 0 ? getValue(idMerchantAccountInformationKey, this.payload!.pixKey) : '';
-      final url = this.payload!.url != null && this.payload!.url!.length > 0 ? getValue(idMerchantAccountInformationURL, this.payload!.url!.replaceAll('https://', '')) : '';
+      final key =
+          this.payload!.pixKey != null && this.payload!.pixKey!.length > 0
+              ? getValue(idMerchantAccountInformationKey, this.payload!.pixKey)
+              : '';
+      final url = this.payload!.url != null && this.payload!.url!.length > 0
+          ? getValue(idMerchantAccountInformationURL,
+              this.payload!.url!.replaceAll('https://', ''))
+          : '';
 
       /// Há um erro no API que impede o uso de descrição, justificando assim os comments abaixo. Assim que estes bugs forem consertados, o código voltará ao funcionamento completo.
       // final description = getValue(
@@ -64,14 +72,18 @@ class PixFlutter {
 
     /// Formata o txid
     getAdditionalDataFieldTemplate() {
-      final txid =
-          getValue(idAdditionalDataFieldTemplateTXID, this.payload!.txid);
+      final txid = this.payload!.txid != null && this.payload!.txid!.length > 0
+          ? getValue(idAdditionalDataFieldTemplateTXID, this.payload!.txid)
+          : '';
       return getValue(idAdditionalDataFieldTemplate, txid);
     }
 
     /// Formata o isUniquePayment
     getUniquePayment() {
-      final uniquePayment = this.payload!.isUniquePayment != null && this.payload!.isUniquePayment == true ? getValue(idPointOfInitiationMethod,'12') : '';
+      final uniquePayment = this.payload!.isUniquePayment != null &&
+              this.payload!.isUniquePayment == true
+          ? getValue(idPointOfInitiationMethod, '12')
+          : '';
 
       return uniquePayment;
     }
@@ -115,7 +127,9 @@ class PixFlutter {
           getMerchantAccountInfo() +
           getValue(idMerchantCategoryCode, "0000") +
           getValue(idTransactionCurrency, "986") +
-          getValue(idTransactionAmount, getAmount()) +
+          (getAmount() != ''
+              ? getValue(idTransactionAmount, getAmount())
+              : '') +
           getValue(idCountryCode, "BR") +
           getValue(idMerchantName, this.payload!.merchantName) +
           getValue(idMerchantCity, this.payload!.merchantCity) +

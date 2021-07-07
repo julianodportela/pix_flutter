@@ -1,6 +1,6 @@
 name: pix_flutter
 description: Wrapper para usar o API PIX, compatível com a maioria do PSPs. Para mais informações, acesse a documentação do PSP de sua escolha.
-version: 1.0.3
+version: 1.0.4
 homepage: https://github.com/julianodportela/pix_flutter
 
 environment:

@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
           description: 'DESCRIÇÃO_DA_COMPRA',
           merchantName: 'MERCHANT_NAME',
           merchantCity: 'CITY_NAME',
-          txid: 'TXID',
+          txid: 'TXID', // Até 25 caracteres para o QR Code estático
           amount: 'AMOUNT'));
 
   @override
@@ -152,12 +152,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     };
 
                     query = await pixFlutter.createCobTxid(
-                        request: request, txid: '');
+                        request: request,
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
-                    var payloadDinamico = PixFlutter(payload: Payload(
+                    var payloadDinamico = PixFlutter(
+                        payload: Payload(
                       merchantName: 'SEU_MERCHANT_NAME',
                       merchantCity: 'SEU_MERCHANT_CITY',
-                      amount: query['valor']['original'],
                       txid: query['txid'],
                       url: query['location'],
                       isUniquePayment: true,
@@ -197,8 +198,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       "solicitacaoPagador": "Cobrança dos serviços prestados."
                     };
 
-                    query =
-                        await pixFlutter.reviewCob(request: request, txid: '');
+                    query = await pixFlutter.reviewCob(
+                        request: request,
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
                     query = query['location'];
 
@@ -224,7 +226,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
               TextButton(
                   onPressed: () {
-                    pixFlutter.checkCob(txid: '');
+                    pixFlutter.checkCob(
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -340,8 +343,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       "solicitacaoPagador": "Cobrança dos serviços prestados."
                     };
 
-                    query =
-                        await pixFlutter.createCobV(request: request, txid: '');
+                    query = await pixFlutter.createCobV(
+                        request: request,
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
                     query = query['location'];
 
@@ -377,8 +381,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       "solicitacaoPagador": "Cobrança dos serviços prestados."
                     };
 
-                    query =
-                        await pixFlutter.reviewCobV(request: request, txid: '');
+                    query = await pixFlutter.reviewCobV(
+                        request: request,
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
                     query = query['location'];
 
@@ -404,7 +409,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
               TextButton(
                   onPressed: () {
-                    pixFlutter.checkCobV(txid: '');
+                    pixFlutter.checkCobV(
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -529,7 +535,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ]
                     };
 
-                    pixFlutter.createLoteCobV(request: request, id: '');
+                    pixFlutter.createLoteCobV(
+                        request: request,
+                        id: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -551,7 +559,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
               TextButton(
                   onPressed: () {
-                    pixFlutter.checkLoteCobV(id: '');
+                    pixFlutter.checkLoteCobV(
+                        id: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -604,7 +613,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       ]
                     };
 
-                    pixFlutter.checkLoteCobVList(request: request, txid: '');
+                    pixFlutter.checkLoteCobVList(
+                        request: request,
+                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
                   },
                   child: Container(
                     decoration: BoxDecoration(
