@@ -257,7 +257,7 @@ class PixFlutter {
   }
 
   /// Consulta uma lista de cobranças imediatas
-  checkCobList({request}) async {
+  checkCobList({queryParameters}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -267,7 +267,8 @@ class PixFlutter {
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cob',
-        data: request);
+        isQuery: true,
+        queryParameters: queryParameters);
   }
 
   /// Cria uma Cobrança com Vencimento
@@ -311,7 +312,7 @@ class PixFlutter {
   }
 
   /// Consulta o status e as informações de uma lista de Cobranças com Vencimento a partir dp Txid de cada uma delas
-  checkCobVList({request}) async {
+  checkCobVList({queryParameters}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -321,7 +322,8 @@ class PixFlutter {
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cobv',
-        data: request);
+        isQuery: true,
+        queryParameters: queryParameters);
   }
 
   /// Cria um lote de Cobranças com Vencimento
@@ -351,7 +353,7 @@ class PixFlutter {
   }
 
   /// Consulta uma lista de lotes de Cobranças com Vencimento a partir da location de cada um deles
-  checkLoteCobVList({txid, request}) async {
+  checkLoteCobVList({queryParameters}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -361,7 +363,8 @@ class PixFlutter {
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/lotecobv',
-        data: request);
+        isQuery: true,
+        queryParameters: queryParameters);
   }
 
   /// Cria uma location para o Payload
@@ -379,7 +382,7 @@ class PixFlutter {
   }
 
   /// Consulta as locations em questão
-  checkLocations({request}) async {
+  checkLocations({queryParameters}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -389,7 +392,8 @@ class PixFlutter {
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/loc',
-        data: request);
+        isQuery: true,
+        queryParameters: queryParameters);
   }
 
   /// Recupera uma location
@@ -413,7 +417,7 @@ class PixFlutter {
   }
 
   /// Checa o status de um Pix através do e2eid
-  checkPix({e2eid, request}) async {
+  checkPix({e2eid}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
@@ -425,7 +429,7 @@ class PixFlutter {
   }
 
   /// Checa uma lista de Pix recebidos através dos e2eid
-  checkReceivedPixList({request}) async {
+  checkReceivedPixList({queryParameters}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -434,8 +438,9 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'GET',
-        link: '${api!.baseUrl}/pix',
-        data: request);
+        link: api!.baseUrl,
+        isQuery: true,
+        queryParameters: queryParameters);
   }
 
   /// Solicita reembolso de um Pix
@@ -503,7 +508,7 @@ class PixFlutter {
   }
 
   /// Consulta os dados de uma lista de webhooks
-  checkWebhooks({request}) async {
+  checkWebhooks({queryParameters}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -513,19 +518,32 @@ class PixFlutter {
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/webhook',
-        data: request);
+        isQuery: true,
+        queryParameters: queryParameters);
   }
 
   /// Método para enviar as informações necessárias à API do seu PSP de preferência
   Future<Map<String, dynamic>> send(
-      {headers, customRequest, link, data}) async {
+      {headers, customRequest, link, data, isQuery, queryParameters}) async {
     http.Request request;
 
-    if (api!.isBancoDoBrasil!) {
-      request = http.Request(
-          '$customRequest', Uri.parse('$link?gw-dev-app-key=${api!.appKey}'));
+    if (isQuery == true) {
+      if (api!.isBancoDoBrasil!) {
+        request = http.Request(
+            '$customRequest',
+            Uri.parse(
+                '$link${isQuery ? '/?$queryParameters' : ''}&gw-dev-app-key=${api!.appKey}'));
+      } else {
+        request = http.Request('$customRequest',
+            Uri.parse('$link${isQuery ? '/?$queryParameters' : ''}'));
+      }
     } else {
-      request = http.Request('$customRequest', Uri.parse('$link'));
+      if (api!.isBancoDoBrasil!) {
+        request = http.Request(
+            '$customRequest', Uri.parse('$link?gw-dev-app-key=${api!.appKey}'));
+      } else {
+        request = http.Request('$customRequest', Uri.parse(link));
+      }
     }
 
     if (data != null) {

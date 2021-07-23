@@ -1,3 +1,7 @@
+## [1.0.5] - 23 de julho de 2021
+
+* Ajuste nos métodos de consulta às listas de Cobrança, Cobrança com Vencimento, Lotes e Pix recebidos.
+
 ## [1.0.4] - 7 de julho de 2021
 
 * Conserto de bug no método de geração do QR Code do QR Code dinâmico, pequenos ajustes no exemplo e formatação.

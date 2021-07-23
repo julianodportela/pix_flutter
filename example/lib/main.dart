@@ -249,38 +249,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
               TextButton(
                   onPressed: () {
-                    var request = {
-                      "parametros": {
-                        "inicio": "2020-04-01T00:00:00Z",
-                        "fim": "2020-04-02T10:00:00Z",
-                        "paginação": {
-                          "paginaAtual": 0,
-                          "itensPorPagina": 100,
-                          "quantidadeDePaginas": 1,
-                          "quantidadeTotalDeItens": 2
-                        }
-                      },
-                      "cobs": [
-                        {
-                          "allOf": [
-                            {
-                              "ref463464":
-                                  "#/components/examples/cobResponse1/value"
-                            }
-                          ]
-                        },
-                        {
-                          "allOf": [
-                            {
-                              "ref4646346":
-                                  "#/components/examples/cobResponse2/value"
-                            }
-                          ]
-                        }
-                      ]
-                    };
+                    // Atenção! Siga o padrao RFC 3339 para a data
 
-                    pixFlutter.checkCobList(request: request);
+                    pixFlutter.checkCobList(
+                        queryParameters:
+                            'inicio=2021-05-10T00:00:00Z&fim=2021-08-14T23:59:59Z');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -432,30 +405,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
               TextButton(
                   onPressed: () {
-                    var request = {
-                      "parametros": {
-                        "inicio": "2020-04-01T00:00:00Z",
-                        "fim": "2020-04-01T23:59:59Z",
-                        "paginacao": {
-                          "paginaAtual": 0,
-                          "itensPorPagina": 100,
-                          "quantidadeDePaginas": 1,
-                          "quantidadeTotalDeItens": 1
-                        }
-                      },
-                      "cobs": [
-                        {
-                          "allOf": [
-                            {
-                              "ref5646464":
-                                  "#/components/examples/cobResponse4/value"
-                            }
-                          ]
-                        }
-                      ]
-                    };
+                    // Atenção! Siga o padrao RFC 3339 para a data
 
-                    pixFlutter.checkCobVList(request: request);
+                    pixFlutter.checkCobVList(
+                        queryParameters:
+                            'inicio=2021-05-10T00:00:00Z&fim=2021-08-14T23:59:59Z');
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -582,40 +536,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   )),
               TextButton(
                   onPressed: () {
-                    var request = {
-                      "parametros": {
-                        "inicio": "2020-01-01T00:00:00Z",
-                        "fim": "2020-12-01T23:59:59Z",
-                        "paginacao": {
-                          "paginaAtual": 0,
-                          "itensPorPagina": 100,
-                          "quantidadeDePaginas": 1,
-                          "quantidadeTotalDeItens": 2
-                        }
-                      },
-                      "lotes": [
-                        {
-                          "allOf": [
-                            {
-                              "ref46436363567":
-                                  "#/components/examples/loteCobVResponse1/value"
-                            }
-                          ]
-                        },
-                        {
-                          "allOf": [
-                            {
-                              "ref62463572":
-                                  "#/components/examples/loteCobVResponse2/value"
-                            }
-                          ]
-                        }
-                      ]
-                    };
+                    // Atenção! Siga o padrao RFC 3339 para a data
 
                     pixFlutter.checkLoteCobVList(
-                        request: request,
-                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
+                        queryParameters:
+                            'inicio=2021-05-10T00:00:00Z&fim=2021-08-14T23:59:59Z');
                   },
                   child: Container(
                     decoration: BoxDecoration(

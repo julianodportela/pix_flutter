@@ -19,7 +19,7 @@ Este plug-in permite:
 
 ```dart
 dependencies:
-    pix_flutter: ^1.0.4
+    pix_flutter: ^1.0.5
 ```
 
 2. Importe o pacote
@@ -97,36 +97,9 @@ pixFlutter.checkCob(txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar Lista
-var request = {
-    "parametros": {
-      "inicio": "2020-04-01T00:00:00Z",
-      "fim": "2020-04-02T10:00:00Z",
-      "paginação": {
-        "paginaAtual": 0,
-        "itensPorPagina": 100,
-        "quantidadeDePaginas": 1,
-        "quantidadeTotalDeItens": 2
-      }
-    },
-    "cobs": [
-      {
-        "allOf": [
-          {
-            "ref463464": "#/components/examples/cobResponse1/value"
-          }
-        ]
-      },
-      {
-        "allOf": [
-          {
-            "ref4646346": "#/components/examples/cobResponse2/value"
-          }
-        ]
-      }
-    ]
-};
 
-pixFlutter.checkCobList(request: request);
+// Atenção! Siga o padrao RFC 3339 para a data
+pixFlutter.checkCobList(queryParameters: 'inicio=2021-05-10T00:00:00Z&fim=2021-08-14T23:59:59Z');
 ```
 
 ### Criar, revisar e consultar cobranças com vencimento
@@ -199,29 +172,9 @@ pixFlutter.checkCobV(txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar Lista
-var request = {
-    "parametros": {
-      "inicio": "2020-04-01T00:00:00Z",
-      "fim": "2020-04-01T23:59:59Z",
-      "paginacao": {
-        "paginaAtual": 0,
-        "itensPorPagina": 100,
-        "quantidadeDePaginas": 1,
-        "quantidadeTotalDeItens": 1
-      }
-    },
-    "cobs": [
-      {
-        "allOf": [
-          {
-            "ref5646464": "#/components/examples/cobResponse4/value"
-          }
-        ]
-      }
-    ]
-};
 
-pixFlutter.checkCobVList(request: request);
+// Atenção! Siga o padrao RFC 3339 para a data
+pixFlutter.checkCobVList(queryParameters: 'inicio=2021-05-10T00:00:00Z&fim=2021-08-14T23:59:59Z');
 ```
 
 ### Criar e consultar cobranças com vencimento em lote
@@ -288,36 +241,9 @@ pixFlutter.checkLoteCobV(id: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
 
 
 // Consultar Lista
-var request  = {
-    "parametros": {
-      "inicio": "2020-01-01T00:00:00Z",
-      "fim": "2020-12-01T23:59:59Z",
-      "paginacao": {
-        "paginaAtual": 0,
-        "itensPorPagina": 100,
-        "quantidadeDePaginas": 1,
-        "quantidadeTotalDeItens": 2
-      }
-    },
-    "lotes": [
-      {
-        "allOf": [
-          {
-            "ref46436363567": "#/components/examples/loteCobVResponse1/value"
-          }
-        ]
-      },
-      {
-        "allOf": [
-          {
-            "ref62463572": "#/components/examples/loteCobVResponse2/value"
-          }
-        ]
-      }
-    ]
-};
 
-pixFlutter.checkLoteCobVList(request: request, txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
+// Atenção! Siga o padrao RFC 3339 para a data
+pixFlutter.checkLoteCobVList(queryParameters: 'inicio=2021-05-10T00:00:00Z&fim=2021-08-14T23:59:59Z');
 ```
 
 - *Observações*
@@ -344,5 +270,4 @@ Contribuições são o que fazem a comunidade open source um lugar incrível par
 
 ## Contato
 
-[Github](https://github.com/julianodportela) 
-Email: **julianodportela@gmail.com.**
+[Github](https://github.com/julianodportela) · Email: **julianodportela@gmail.com.**
