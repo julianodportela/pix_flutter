@@ -42,6 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
           appKey: 'SEU_APP_KEY',
           permissions: [], // Lista das permissoes, use PixPermissions,
           isBancoDoBrasil: false // Use true se estiver usando API do BB,
+          // Se voce estiver usando um certificado P12, utilize desta forma:
+          // certificatePath:
+          // e inclua o destino para o arquivo ;)
           ),
 
       // Essas informações a seguir somente são necessárias se você deseja utilizar o QR Code Estático

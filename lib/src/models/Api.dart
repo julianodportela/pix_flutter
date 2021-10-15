@@ -4,6 +4,7 @@ class Api {
   final String? authUrl;
   final String? certificate;
   final String? appKey;
+  final String? certificatePath;
   final List? permissions;
   final bool? isBancoDoBrasil;
 
@@ -12,6 +13,7 @@ class Api {
     this.authUrl,
     this.certificate,
     this.appKey,
+    this.certificatePath,
     this.permissions,
     this.isBancoDoBrasil,
   });

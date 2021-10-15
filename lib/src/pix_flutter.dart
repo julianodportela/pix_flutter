@@ -1,8 +1,9 @@
-import 'dart:convert';
+import 'dart:io';
+import 'package:dio/adapter.dart';
+import 'package:dio/dio.dart';
 import 'package:pix_flutter/src/models/Api.dart';
 import '../pix_flutter.dart';
 import 'models/models.dart';
-import 'package:http/http.dart' as http;
 
 /// IDs necessários para gerar o QR Code Estático, como definidos pelo BACEN
 String idPaylodFormatIndicator = "00";
@@ -144,37 +145,56 @@ class PixFlutter {
 
   /// Pega o AccessToken necessário para as outras operações do servidor do seu PSP
   getAccessToken() async {
-    var headers = {
-      'Authorization': '${api!.certificate}',
-      'Content-Type': 'application/x-www-form-urlencoded',
-    };
-    var bodyFields = {
-      'grant_type': 'client_credentials',
-      'scope':
-          '${api!.permissions.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}'
-    };
+    var bodyFields;
+    var headers;
+    var response;
+    final dio = Dio();
 
-    var request;
+    if (api!.certificatePath != '' && api!.certificatePath != null) {
+      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+          (client) {
+        SecurityContext sc = SecurityContext();
+        sc.setTrustedCertificates(api!.certificatePath!, password: '');
+        HttpClient httpClient = HttpClient(context: sc);
+        return httpClient;
+      };
 
-    if (api!.isBancoDoBrasil!) {
-      request = http.Request(
-          'POST', Uri.parse('${api!.authUrl}?gw-dev-app-key=${api!.appKey}'));
+      headers = {
+        'Content-Type': 'application/json',
+      };
+      bodyFields = {
+        'grant_type': 'client_credentials',
+      };
     } else {
-      request = http.Request('POST', Uri.parse('${api!.authUrl}'));
+      headers = {
+        'Authorization': '${api!.certificate}',
+        'Content-Type': 'application/x-www-form-urlencoded',
+      };
+      bodyFields = {
+        'grant_type': 'client_credentials',
+        'scope':
+            '${api!.permissions.toString().replaceAll('[', '').replaceAll(']', '').replaceAll(',', '')}'
+      };
     }
 
-    request.bodyFields = bodyFields;
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
+    if (api!.isBancoDoBrasil!) {
+      response = await dio.post('${api!.authUrl}?gw-dev-app-key=${api!.appKey}',
+          data: bodyFields,
+          options: Options(
+              headers: headers,
+              contentType: Headers.formUrlEncodedContentType));
+    } else {
+      response = await dio.post('${api!.authUrl}',
+          data: bodyFields,
+          options: Options(
+              headers: headers,
+              contentType: Headers.formUrlEncodedContentType));
+    }
 
     if (response.statusCode == 200) {
-      Map<String, dynamic> result =
-          json.decode(await response.stream.bytesToString());
-
-      return result['access_token'];
+      return response.data['access_token'];
     } else {
-      print(response.reasonPhrase);
+      print(response.statusMessage);
     }
   }
 
@@ -212,7 +232,7 @@ class PixFlutter {
     return send(
         headers: headers,
         customRequest: 'PUT',
-        link: '${api!.baseUrl}/cob/$txid',
+        link: '${api!.baseUrl}/cob/?txid=$txid',
         data: request);
   }
 
@@ -252,7 +272,21 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'POST',
-        link: '${api!.baseUrl}/cob',
+        link: '${api!.baseUrl}/cob/',
+        data: request);
+  }
+
+  /// Cria a cobrança normalmente, mas já inclui o qr code dinâmico gerado na resposta ;)
+  createCobQRCode({request}) async {
+    var headers = {
+      'Authorization': 'Bearer ${await getAccessToken()}',
+      'Content-Type': 'application/json'
+    };
+
+    send(
+        headers: headers,
+        customRequest: 'PUT',
+        link: '${api!.baseUrl}/cobqrcode/',
         data: request);
   }
 
@@ -266,7 +300,7 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'GET',
-        link: '${api!.baseUrl}/cob',
+        link: '${api!.baseUrl}/cob/',
         isQuery: true,
         queryParameters: queryParameters);
   }
@@ -321,7 +355,7 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'GET',
-        link: '${api!.baseUrl}/cobv',
+        link: '${api!.baseUrl}/cobv/',
         isQuery: true,
         queryParameters: queryParameters);
   }
@@ -362,7 +396,7 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'GET',
-        link: '${api!.baseUrl}/lotecobv',
+        link: '${api!.baseUrl}/lotecobv/',
         isQuery: true,
         queryParameters: queryParameters);
   }
@@ -377,7 +411,7 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'POST',
-        link: '${api!.baseUrl}/loc',
+        link: '${api!.baseUrl}/loc/',
         data: request);
   }
 
@@ -391,7 +425,7 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'GET',
-        link: '${api!.baseUrl}/loc',
+        link: '${api!.baseUrl}/loc/',
         isQuery: true,
         queryParameters: queryParameters);
   }
@@ -517,7 +551,7 @@ class PixFlutter {
     send(
         headers: headers,
         customRequest: 'GET',
-        link: '${api!.baseUrl}/webhook',
+        link: '${api!.baseUrl}/webhook/',
         isQuery: true,
         queryParameters: queryParameters);
   }
@@ -525,46 +559,27 @@ class PixFlutter {
   /// Método para enviar as informações necessárias à API do seu PSP de preferência
   Future<Map<String, dynamic>> send(
       {headers, customRequest, link, data, isQuery, queryParameters}) async {
-    http.Request request;
+    final dio = Dio();
+    String url = '$link${isQuery != null ? {
+        isQuery ? '/?$queryParameters' : ''
+      } : ''}${api!.isBancoDoBrasil! ? '${link.toString().contains('?') ? "&" : "?"}gw-dev-app-key=${api!.appKey}' : ''}';
+    Response request = customRequest == 'PUT' ||
+            customRequest == 'POST' ||
+            customRequest == 'PATCH'
+        ? await dio.request(url,
+            options: Options(method: '$customRequest', headers: headers),
+            data: data)
+        : await dio.request(url,
+            options: Options(method: '$customRequest', headers: headers));
 
-    if (isQuery == true) {
-      if (api!.isBancoDoBrasil!) {
-        request = http.Request(
-            '$customRequest',
-            Uri.parse(
-                '$link${isQuery ? '/?$queryParameters' : ''}&gw-dev-app-key=${api!.appKey}'));
-      } else {
-        request = http.Request('$customRequest',
-            Uri.parse('$link${isQuery ? '/?$queryParameters' : ''}'));
-      }
+    if (request.statusCode == 200 ||
+        request.statusCode == 201 ||
+        request.statusCode == 202 ||
+        request.statusCode == 204) {
+      print(request);
+      return request.data;
     } else {
-      if (api!.isBancoDoBrasil!) {
-        request = http.Request(
-            '$customRequest', Uri.parse('$link?gw-dev-app-key=${api!.appKey}'));
-      } else {
-        request = http.Request('$customRequest', Uri.parse(link));
-      }
-    }
-
-    if (data != null) {
-      request.body = json.encode(data);
-    }
-
-    request.headers.addAll(headers);
-
-    http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200 ||
-        response.statusCode == 201 ||
-        response.statusCode == 202 ||
-        response.statusCode == 204) {
-      Map<String, dynamic> result =
-          json.decode(await response.stream.bytesToString());
-
-      print(result);
-      return result;
-    } else {
-      print(response.reasonPhrase);
+      print(request.statusMessage);
     }
 
     return {};

@@ -1,3 +1,11 @@
+## [2.0.0] - 14 de Outubro de 2021
+
+* Troca de cliente Http de http.dart para Dio
+* Inclusão do método para adicionar certificado P12
+* Inclusão do método para gerar QR Code dinâmico com QR Code gerado na resposta
+* Ajuste de bugs
+* Melhoria de código
+
 ## [1.0.5] - 23 de julho de 2021
 
 * Ajuste nos métodos de consulta às listas de Cobrança, Cobrança com Vencimento, Lotes e Pix recebidos.
@@ -17,7 +25,6 @@
 ## [1.0.1] - 17 de junho de 2021
 
 * Bug com QR Code estático consertado.
-
 
 ## [1.0.0] - 15 de junho de 2021.
 
