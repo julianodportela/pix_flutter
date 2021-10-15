@@ -199,7 +199,7 @@ class PixFlutter {
   }
 
   /// Pega o Payload de Cobrança Imediata fazendo uso do Pix Url Access Token
-  Future<Map<String, dynamic>> getCobPayload({pixUrlAccessToken}) async {
+  Future getCobPayload({pixUrlAccessToken}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
@@ -557,7 +557,7 @@ class PixFlutter {
   }
 
   /// Método para enviar as informações necessárias à API do seu PSP de preferência
-  Future<Map<String, dynamic>> send(
+  Future send(
       {headers, customRequest, link, data, isQuery, queryParameters}) async {
     final dio = Dio();
     String url = '$link${isQuery != null ? {
@@ -577,7 +577,7 @@ class PixFlutter {
         request.statusCode == 202 ||
         request.statusCode == 204) {
       print(request);
-      return request.data;
+      return request;
     } else {
       print(request.statusMessage);
     }

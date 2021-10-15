@@ -1,3 +1,7 @@
+## [2.0.1] - 15 de Outubro de 2021
+
+* Pequeno bug consertado
+
 ## [2.0.0] - 14 de Outubro de 2021
 
 * Troca de cliente Http de http.dart para Dio
