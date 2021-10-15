@@ -204,7 +204,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    return await send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/$pixUrlAccessToken');
@@ -216,7 +216,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cobv/$pixUrlAccessToken');
@@ -243,7 +243,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PATCH',
         link: '${api!.baseUrl}/cob/$txid',
@@ -256,7 +256,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cob/$txid');
@@ -269,7 +269,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'POST',
         link: '${api!.baseUrl}/cob/',
@@ -283,7 +283,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PUT',
         link: '${api!.baseUrl}/cobqrcode/',
@@ -297,7 +297,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cob/',
@@ -312,7 +312,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PUT',
         link: '${api!.baseUrl}/cobv/$txid',
@@ -326,7 +326,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PATCH',
         link: '${api!.baseUrl}/cobv/$txid',
@@ -339,7 +339,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cobv/$txid');
@@ -352,7 +352,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/cobv/',
@@ -367,7 +367,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PUT',
         link: '${api!.baseUrl}/lotecobv/$id',
@@ -380,7 +380,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/lotecobv/$id');
@@ -393,7 +393,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/lotecobv/',
@@ -408,7 +408,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'POST',
         link: '${api!.baseUrl}/loc/',
@@ -422,7 +422,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/loc/',
@@ -434,7 +434,7 @@ class PixFlutter {
   recoverLocation({id}) async {
     var headers = {'Authorization': 'Bearer ${await getAccessToken()}'};
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/loc/$id');
@@ -444,7 +444,7 @@ class PixFlutter {
   deleteLocation({id}) async {
     var headers = {'Authorization': 'Bearer ${await getAccessToken()}'};
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'DELETE',
         link: '${api!.baseUrl}/loc/$id/txid');
@@ -456,7 +456,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/pix/$e2eid');
@@ -469,7 +469,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: api!.baseUrl,
@@ -484,7 +484,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PUT',
         link: '${api!.baseUrl}/pix/$e2eid/devolucao/$id',
@@ -497,7 +497,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/pix/$e2eid/devolucao/$id');
@@ -510,7 +510,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'PUT',
         link: '${api!.baseUrl}/webhook/$chave',
@@ -523,7 +523,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/webhook/$chave');
@@ -535,7 +535,7 @@ class PixFlutter {
       'Authorization': 'Bearer ${await getAccessToken()}',
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'DELETE',
         link: '${api!.baseUrl}/webhook/$chave');
@@ -548,7 +548,7 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    send(
+    return send(
         headers: headers,
         customRequest: 'GET',
         link: '${api!.baseUrl}/webhook/',
@@ -576,8 +576,8 @@ class PixFlutter {
         request.statusCode == 201 ||
         request.statusCode == 202 ||
         request.statusCode == 204) {
-      print(request);
-      return request;
+      print(request.data);
+      return request.data;
     } else {
       print(request.statusMessage);
     }

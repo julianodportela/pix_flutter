@@ -154,20 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
                       "solicitacaoPagador": "Cobrança dos serviços prestados."
                     };
 
-                    query = await pixFlutter.createCobTxid(
-                        request: request,
-                        txid: 'uFtsUPrY1dVV8oLshK1DLsRbYrbZ9UfRouW');
-
-                    var payloadDinamico = PixFlutter(
-                        payload: Payload(
-                      merchantName: 'SEU_MERCHANT_NAME',
-                      merchantCity: 'SEU_MERCHANT_CITY',
-                      txid: query['txid'],
-                      url: query['location'],
-                      isUniquePayment: true,
-                    ));
-
-                    query = payloadDinamico.getQRCode();
+                    query = await pixFlutter.createCobQRCode(request: request);
+                    query = query['textoImagemQRcode'];
 
                     setState(() {});
                   },

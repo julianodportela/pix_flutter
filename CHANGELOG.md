@@ -1,3 +1,7 @@
+## [2.0.2] - 15 de Outubro de 2021
+
+* Pequenos bugs consertados e melhoria de código.
+
 ## [2.0.1] - 15 de Outubro de 2021
 
 * Pequeno bug consertado
