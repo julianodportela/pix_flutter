@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:pix_flutter/src/models/Api.dart';
 import '../pix_flutter.dart';
 import 'models/models.dart';
 

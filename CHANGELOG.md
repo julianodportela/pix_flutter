@@ -1,12 +1,16 @@
-## [2.0.2] - 15 de Outubro de 2021
+## [2.0.3] - 23 de dezembro de 2021
+
+* Update de dependências.
+
+## [2.0.2] - 15 de outubro de 2021
 
 * Pequenos bugs consertados e melhoria de código.
 
-## [2.0.1] - 15 de Outubro de 2021
+## [2.0.1] - 15 de outubro de 2021
 
 * Pequeno bug consertado
 
-## [2.0.0] - 14 de Outubro de 2021
+## [2.0.0] - 14 de outubro de 2021
 
 * Troca de cliente Http de http.dart para Dio
 * Inclusão do método para adicionar certificado P12
