@@ -231,7 +231,7 @@ class PixFlutter {
     return send(
         headers: headers,
         customRequest: 'PUT',
-        link: '${api!.baseUrl}/cob/?txid=$txid',
+        link: '${api!.baseUrl}/cob/$txid',
         data: request);
   }
 
@@ -276,7 +276,7 @@ class PixFlutter {
   }
 
   /// Cria a cobrança normalmente, mas já inclui o qr code dinâmico gerado na resposta ;)
-  createCobQRCode({request}) async {
+  createCobQRCode({txid, request}) async {
     var headers = {
       'Authorization': 'Bearer ${await getAccessToken()}',
       'Content-Type': 'application/json'
@@ -285,7 +285,7 @@ class PixFlutter {
     return send(
         headers: headers,
         customRequest: 'PUT',
-        link: '${api!.baseUrl}/cobqrcode/',
+        link: '${api!.baseUrl}/cobqrcode/$txid',
         data: request);
   }
 
