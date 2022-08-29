@@ -1,3 +1,7 @@
+## [2.0.5] - 29 de agosto de 2022
+
+* Pequeno bug consertado.
+
 ## [2.0.4] - 02 de maio de 2022
 
 * Update de dependências e pequeno bug consertado.

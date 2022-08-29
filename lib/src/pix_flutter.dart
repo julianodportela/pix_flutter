@@ -117,7 +117,7 @@ class PixFlutter {
         }
       }
 
-      return idCRC16 + "04" + dechex(resultado).toUpperCase();
+      return idCRC16 + "04" + dechex(resultado).toUpperCase().padLeft(4, "0");
     }
 
     /// Método final para juntar e gerar o QR Code Estático final
@@ -270,7 +270,7 @@ class PixFlutter {
 
     return send(
         headers: headers,
-        customRequest: 'POST',
+        customRequest: 'PUT',
         link: '${api!.baseUrl}/cob/',
         data: request);
   }
@@ -282,10 +282,12 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
+    print('${api!.baseUrl}/cobqrcode/$txid${api!.isBancoDoBrasil! ? '?gw-dev-app-key=${api!.appKey}' : ''}');
+
     return send(
         headers: headers,
         customRequest: 'PUT',
-        link: '${api!.baseUrl}/cobqrcode/$txid',
+        link: '${api!.baseUrl}/cobqrcode/$txid${api!.isBancoDoBrasil! ? '?gw-dev-app-key=${api!.appKey}' : ''}',
         data: request);
   }
 

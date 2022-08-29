@@ -35,12 +35,12 @@ class _MyHomePageState extends State<MyHomePage> {
   /// As informações solicitadas a seguir estão disponíveis no seu PSP ou instituição financeira.
   PixFlutter pixFlutter = PixFlutter(
       api: Api(
-          baseUrl: 'SEU_BASE_URL',
-          authUrl: 'SEU_AUTH_URL',
-          certificate: 'SEU_CODIGO_BASIC',
-          appKey: 'SEU_APP_KEY',
-          permissions: [], // Lista das permissoes, use PixPermissions,
-          isBancoDoBrasil: false // Use true se estiver usando API do BB,
+          baseUrl: 'https://api.hm.bb.com.br/pix/v1',
+          authUrl: 'https://oauth.hm.bb.com.br/oauth/token',
+          certificate: 'Basic ZXlKcFpDSTZJbUU1TW1Jek0yWXRNVGMxTmkwMElpd2lZMjlrYVdkdlVIVmliR2xqWVdSdmNpSTZNQ3dpWTI5a2FXZHZVMjltZEhkaGNtVWlPakUzTURjMUxDSnpaWEYxWlc1amFXRnNTVzV6ZEdGc1lXTmhieUk2TVgwOmV5SnBaQ0k2SWpSa09XUTBPREl0TlRVNU5DMDBaVE5sTFRnd01UY3RZbVZsT1RrME5EWmxObUpsWkROaU9HTXdOV1F0SWl3aVkyOWthV2R2VUhWaWJHbGpZV1J2Y2lJNk1Dd2lZMjlrYVdkdlUyOW1kSGRoY21VaU9qRTNNRGMxTENKelpYRjFaVzVqYVdGc1NXNXpkR0ZzWVdOaGJ5STZNU3dpYzJWeGRXVnVZMmxoYkVOeVpXUmxibU5wWVd3aU9qRXNJbUZ0WW1sbGJuUmxJam9pYUc5dGIyeHZaMkZqWVc4aUxDSnBZWFFpT2pFMk1qTTFNRGt4TWpJeE16Tjk=',
+          appKey: 'd27b377903ffabc01368e17d80050c56b931a5bf',
+          permissions: [PixPermissions.cobRead, PixPermissions.cobWrite, PixPermissions.pixRead, PixPermissions.pixWrite], // Lista das permissoes, use PixPermissions,
+          isBancoDoBrasil: true // Use true se estiver usando API do BB,
           // Se voce estiver usando um certificado P12, utilize desta forma:
           // certificatePath:
           // e inclua o destino para o arquivo ;)
@@ -153,8 +153,19 @@ class _MyHomePageState extends State<MyHomePage> {
                       "solicitacaoPagador": "Cobrança dos serviços prestados."
                     };
 
-                    query = await pixFlutter.createCobQRCode(request: request);
-                    query = query['textoImagemQRcode'];
+                    query = await pixFlutter.createCobTxid(txid: "dgkjsdhgkjshddgsdggjjuliano", request: request);
+
+                    var payloadDinamico = PixFlutter(
+                      payload: Payload(
+                        merchantName: "A",
+                        merchantCity: "BRASILIA",
+                        txid: "***",
+                        url: "qrcodepix-h.bb.com.br/pix/v2/a1bfb8af-3485-4509-8b75-bfc6b7749de9",
+                        isUniquePayment: true,
+                      )
+                    );
+
+                    query = payloadDinamico.getQRCode();
 
                     setState(() {});
                   },
