@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:dio/io.dart';
 import '../pix_flutter.dart';
 import 'models/models.dart';
 
@@ -150,8 +150,7 @@ class PixFlutter {
     final dio = Dio();
 
     if (api!.certificatePath != '' && api!.certificatePath != null) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
+      IOHttpClientAdapter().onHttpClientCreate = (client) {
         SecurityContext sc = SecurityContext();
         sc.setTrustedCertificates(api!.certificatePath!, password: '');
         HttpClient httpClient = HttpClient(context: sc);
@@ -282,12 +281,14 @@ class PixFlutter {
       'Content-Type': 'application/json'
     };
 
-    print('${api!.baseUrl}/cobqrcode/$txid${api!.isBancoDoBrasil! ? '?gw-dev-app-key=${api!.appKey}' : ''}');
+    print(
+        '${api!.baseUrl}/cobqrcode/$txid${api!.isBancoDoBrasil! ? '?gw-dev-app-key=${api!.appKey}' : ''}');
 
     return send(
         headers: headers,
         customRequest: 'PUT',
-        link: '${api!.baseUrl}/cobqrcode/$txid${api!.isBancoDoBrasil! ? '?gw-dev-app-key=${api!.appKey}' : ''}',
+        link:
+            '${api!.baseUrl}/cobqrcode/$txid${api!.isBancoDoBrasil! ? '?gw-dev-app-key=${api!.appKey}' : ''}',
         data: request);
   }
 

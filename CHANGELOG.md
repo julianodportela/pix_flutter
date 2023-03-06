@@ -1,3 +1,8 @@
+## [2.1.0] - 03 de março de 2023
+
+* Ajuste de dependências.
+* Análise estática consertada.
+
 ## [2.0.5] - 29 de agosto de 2022
 
 * Pequeno bug consertado.
