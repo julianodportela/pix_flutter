@@ -150,7 +150,7 @@ class PixFlutter {
     final dio = Dio();
 
     if (api!.certificatePath != '' && api!.certificatePath != null) {
-      IOHttpClientAdapter().onHttpClientCreate = (client) {
+      IOHttpClientAdapter().createHttpClient = () {
         SecurityContext sc = SecurityContext();
         sc.setTrustedCertificates(api!.certificatePath!, password: '');
         HttpClient httpClient = HttpClient(context: sc);
