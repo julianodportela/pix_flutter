@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import '../pix_flutter.dart';
@@ -90,10 +91,6 @@ class PixFlutter {
 
     /// Executa o método de encripção requerido pelo BACEN
     getCRC16(payload) {
-      ord(str) {
-        return str.codeUnitAt(0);
-      }
-
       dechex(number) {
         if (number < 0) {
           number = 0xffffffff + number + 1;
@@ -107,9 +104,11 @@ class PixFlutter {
       var resultado = 0xffff;
       var length;
 
-      if ((length = payload.length) > 0) {
+      List<int> bytes = utf8.encode(payload); // Convert the UTF-8 string to bytes
+
+      if ((length = bytes.length) > 0) {
         for (var offset = 0; offset < length; offset++) {
-          resultado ^= ord(payload[offset]) << 8;
+          resultado ^= bytes[offset] << 8;
           for (var bitwise = 0; bitwise < 8; bitwise++) {
             if (((resultado <<= 1) & 0x10000) != 0) resultado ^= polinomio;
             resultado &= 0xffff;
