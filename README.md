@@ -3,7 +3,7 @@
 [![pub package](https://img.shields.io/pub/v/pix_flutter?color=blue)](https://pub.dev/packages/pix_flutter)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=juliano0365@gmail.com)
 
-Wrapper para usar o API PIX, compatível com a maioria do PSPs. Para mais informações, acesse a documentação do PSP de sua escolha ou a oficial, disponível em: [`documentação`](https://openpix.com.br/api/API-Pix-2-1-0.html).
+Wrapper para usar o API PIX, compatível com a maioria do PSPs. Para mais informações, acesse a documentação do PSP de sua escolha ou a oficial, disponível em: [`documentação`](https://developers.openpix.com.br/pix).
 
 Este plug-in permite:
 - Gerar QR Code Pix estático
